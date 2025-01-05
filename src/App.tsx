@@ -3,6 +3,7 @@ import { IRefPhaserGame, PhaserGame } from './game/PhaserGame';
 import { MainMenu } from './game/scenes/MainMenu';
 import useCanvasScale from './hooks/useCanvasScale';
 import { buttonConfig } from './button-config';
+import { GAME_HEIGHT, GAME_WIDTH } from './game/main';
 
 /**
  * Main application component that initializes and renders the game.
@@ -13,7 +14,7 @@ function App()
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef<IRefPhaserGame | null>(null);
 
-    const scale = useCanvasScale(720, 1280, phaserRef); // Use the useCanvasScale hook to get the canvas scale
+    const scale = useCanvasScale(GAME_WIDTH, GAME_HEIGHT, phaserRef); // Use the useCanvasScale hook to get the canvas scale
 
     const [isMenuScene, setMenuScene] = useState(false);
 
