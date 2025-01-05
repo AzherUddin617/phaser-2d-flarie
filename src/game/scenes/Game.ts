@@ -26,16 +26,15 @@ export class Game extends Scene
 
         this.add.image(0, 0, 'sky').setOrigin(0, 0).setScale(2.1);
 
-        // this.platforms = this.physics.add.staticGroup();
-        this.platforms = new Platforms(this);
+        this.platforms = new Platforms(this); // Create the platforms
 
-        this.player = new Player(this, 100, this.scale.height - 150);
+        this.player = new Player(this, 100, this.scale.height - 150); // Create the player
 
-        this.stars = new Stars(this);
+        this.stars = new Stars(this); // Create the stars
 
-        this.bombs = this.physics.add.group();
+        this.bombs = this.physics.add.group(); // Create the bombs
 
-        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', backgroundColor: '#000' });
+        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', backgroundColor: '#000' }); // Create the score text
 
         //  Collide the player and the stars with the platforms
         this.physics.add.collider(this.player, this.platforms);
@@ -45,21 +44,27 @@ export class Game extends Scene
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
         this.physics.add.overlap(this.player, this.stars, this.collectStar, undefined, this);
 
+        //  Checks to see if the player overlaps with any of the bombs, if he does call the hitBomb function
         this.physics.add.overlap(this.player, this.bombs, this.hitBomb, undefined, this);
     }
 
     update ()
     {
-        this.player.update();
+        this.player.update(); // Update the player
     }
 
+    /**
+    * This function is called when the player overlaps with a star.
+    */
     collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (player, star) =>
     {
         (star as unknown as Phaser.Physics.Arcade.Image)?.disableBody(true, true);
 
-        this.score += 10;
-        this.scoreText.setText('Score: ' + this.score);
+        this.score += 10; // Add and update the score
+        this.scoreText.setText('Score: ' + this.score); // Update the score text
 
+        //  The first parameter is the Event emitted from the Sprite (in this case 'star')
+        //  The second parameter is optional and is the context under which the listener is to be called
         if (this.stars.countActive(true) === 0)
             {
                 //  A new batch of stars to collect
@@ -77,15 +82,19 @@ export class Game extends Scene
         
                 const x = (this.player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
         
-                const bomb = this.bombs.create(x, 16, 'bomb');
-                bomb.setBounce(1);
-                bomb.setCollideWorldBounds(true);
-                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                bomb.allowGravity = false;
+                const bomb = this.bombs.create(x, 16, 'bomb'); // Create a bomb
+
+                bomb.setBounce(1); // Make the bomb bouncy
+                bomb.setCollideWorldBounds(true); // So the bomb doesn't go out of the world
+                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20); // Give it a random x velocity
+                bomb.allowGravity = false; // Make the bomb not fall
         
             }
     }
     
+    /**
+    * This function is called when the player overlaps with a bomb.
+    */
     hitBomb: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (player) =>
     {
         this.physics.pause();
@@ -97,6 +106,9 @@ export class Game extends Scene
         this.changeScene();
     }
 
+    /**
+     * This function is called when the player overlaps with a bomb.
+     */
     changeScene ()
     {
         // pause game

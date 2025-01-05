@@ -17,6 +17,11 @@ export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame
 {
     const game = useRef<Phaser.Game | null>(null!);
 
+    /**
+     * The useLayoutEffect hook is used to ensure that the game is created before the component mounts.
+     * It also ensures that the game is destroyed when the component unmounts.
+     * and it sets the ref to the game instance
+     */
     useLayoutEffect(() =>
     {
         if (game.current === null)
@@ -47,6 +52,10 @@ export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame
         }
     }, [ref]);
 
+    /**
+     * The useEffect hook is used to listen for the "current-scene-ready" event emitted from the game instance.
+     * It then calls the currentActiveScene function with the scene instance as an argument, if it is a function.
+     */
     useEffect(() =>
     {
         EventBus.on('current-scene-ready', (scene_instance: Phaser.Scene) =>

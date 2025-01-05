@@ -7,6 +7,10 @@ const useWindowSize = () => {
   });
 
   useEffect(() => {
+    /**
+     * Event listener to update window size
+     * when the window is resized
+     */
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,

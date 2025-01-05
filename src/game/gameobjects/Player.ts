@@ -3,16 +3,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
     constructor (scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'dude');
+        super(scene, x, y, 'dude'); // Create the sprite
 
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
+        this.scene.add.existing(this); // Add the sprite to the scene
+        this.scene.physics.add.existing(this); // Add the sprite to the physics world
 
-        this.setBounce(0.2);
-        this.setCollideWorldBounds(true);
+        this.setBounce(0.2); // Set the bounce
+        this.setCollideWorldBounds(true); // Set the sprite to collide with the world
 
-        this.cursors = this.scene.input.keyboard!.createCursorKeys();
+        this.cursors = this.scene.input.keyboard!.createCursorKeys(); // Create the cursors
 
+        // Create the animations
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -34,6 +35,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
     }
 
+    /**
+     * This function is called every frame.
+     * in this function we set the velocity of the player by checking the cursors inputs
+     */
     update ()
     {
         if (this.cursors?.left.isDown)

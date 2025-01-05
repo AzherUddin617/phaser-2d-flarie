@@ -12,7 +12,7 @@ export class MainMenu extends Scene
 
     create ()
     {
-        this.background = this.add.image(0, 0, 'bg-menu').setOrigin(0, 0);
+        this.background = this.add.image(0, 0, 'bg-menu').setOrigin(0, 0); // Add the background image
 
         EventBus.emit('current-scene-ready', this); // Emit an event to notify other components that the scene is ready
     }

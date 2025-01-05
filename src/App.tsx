@@ -2,29 +2,18 @@ import { useRef, useState } from 'react';
 import { IRefPhaserGame, PhaserGame } from './game/PhaserGame';
 import { MainMenu } from './game/scenes/MainMenu';
 import useCanvasScale from './hooks/useCanvasScale';
+import { buttonConfig } from './button-config';
 
-const buttonConfig = {
-    buttonText: 'Start Game',
-    buttonStyle: {
-      color: '#FFFFFF',
-      backgroundColor: '#A953FF',
-      top: '75%',
-      left: '50%',
-      width: '70%',
-      height: '48px',
-      borderRadius: '8px',
-      fontSize: '24px',
-      transform: 'translate(-50%, -50%)', // Center the button
-      position: 'absolute', // Ensure proper placement
-    },
-};
-
-function App()
+/**
+ * Main application component that initializes and renders the game.
+ * @returns {JSX.Element} The rendered application component.
+ */
+function App() 
 {
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef<IRefPhaserGame | null>(null);
 
-    const scale = useCanvasScale(720, 1280, phaserRef);
+    const scale = useCanvasScale(720, 1280, phaserRef); // Use the useCanvasScale hook to get the canvas scale
 
     const [isMenuScene, setMenuScene] = useState(false);
 
@@ -43,7 +32,7 @@ function App()
 
     // Event emitted from the PhaserGame component
     const currentScene = (scene: Phaser.Scene) => {
-        setMenuScene(scene.scene.key === 'MainMenu');
+        setMenuScene(scene.scene.key === 'MainMenu'); // Check if the current scene is the MainMenu
     }
 
     return (
@@ -58,7 +47,7 @@ function App()
                             left: '50%',
                             width: 720,
                             height: 1280,
-                            transform: `translate(-50%, -50%) scale(${scale.scaleX})`,
+                            transform: `translate(-50%, -50%) scale(${scale.scaleX})`, // Apply the canvas scale to menu ui
                         }}
                     >
                         <button style={{
