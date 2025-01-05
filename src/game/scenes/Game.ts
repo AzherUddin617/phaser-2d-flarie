@@ -22,7 +22,7 @@ export class Game extends Scene
 
     create ()
     {
-        EventBus.emit('current-scene-ready', this);
+        EventBus.emit('current-scene-ready', this); // Emit an event to notify other components that the scene is ready
 
         this.add.image(0, 0, 'sky').setOrigin(0, 0).setScale(2.1);
 
